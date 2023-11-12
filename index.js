@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv'
 import userService from './services/User_Service.js';
 import authService from './services/Auth_Service.js';
+import productService from './services/Product_Service.js';
 
 dotenv.config();
 
@@ -16,8 +17,10 @@ mongoose.connect(process.env.MONGODB_URL, () => {
 
 
 // Services
-app.use('/api/user-service', userService);
 app.use('/api/auth-service', authService);
+app.use('/api/user-service', userService);
+app.use('/api/product-service', productService);
+
 
 // Start server
 app.listen(8000, () => {

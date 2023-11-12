@@ -1,11 +1,10 @@
 import express from "express";
-import mongoose from "mongoose";
 import User from '../models/User.js';
 import Cart from "../models/Cart.js";
+import Product from "../models/Product.js";
 import { verifyPermission } from "../middleware/verifyPermission.js";
 
 const router = express.Router();
-const Product = mongoose.model('Product', {}); 
 
 // Lấy tất cả người dùng
 router.get('/getAll', verifyPermission, async (req, res) => {
