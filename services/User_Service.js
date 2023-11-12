@@ -38,7 +38,7 @@ router.get('/get/:id', verifyPermission, async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: error
+            message: 'Lỗi server'
         })
     }
 })
@@ -56,7 +56,7 @@ router.put('/edit/:id', verifyPermission, async (req, res) => {
             await User.findOneAndUpdate( { _id: id }, { ...req.body });
             res.status(200).json({
                 success: true,
-                message: 'Sửa người dùng thành công!'
+                message: 'Sửa người dùng thành công'
             });
         }
         else {
@@ -125,7 +125,7 @@ router.post('/cart/:userId', async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: error
+            message: 'Lỗi server'
         });
     }
 });
