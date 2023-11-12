@@ -1,27 +1,26 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
-import userRoute from './routes/User.js';
-import authRoute from './routes/Authentication.js';
-import tokenRoute from './routes/Token.js';
+import userService from './services/User_Service.js';
+import authService from './services/Auth_Service.js';
 
 dotenv.config();
+
+const app = express();
+app.use(express.json());
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URL, () => {
     console.log('Connected to MongoDB');
 });
 
-const app = express();
-app.use(express.json());
 
-// Routes
-app.use('/api/user', userRoute);
-app.use('/api/auth', authRoute);
-app.use('/api/token', tokenRoute);
+// Services
+app.use('/api/user-service', userService);
+app.use('/api/auth-service', authService);
 
 // Start server
 app.listen(8000, () => {
-    console.log('Server started on PORT 8000');
+    console.log('User Service API started on PORT 8000');
 });
 

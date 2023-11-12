@@ -19,12 +19,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    Posts: [
+    Cart: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Post'
+            ref: 'Cart'
         }
-    ],
+    ]
 })
 
 const User = mongoose.model('User', userSchema); 
