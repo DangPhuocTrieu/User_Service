@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
-import Token from '../models/Token.js';
+import User from '../models/User/User.js';
+import Token from '../models/User/Token.js';
 
 const router = express.Router();
 
@@ -26,7 +26,6 @@ router.post('/login', async (req, res) => {
                 tokenRecord.Token = token;
                 await tokenRecord.save();
                 res.status(200).json({ 
-                    success: true,
                     message: 'Đăng nhập thành công',
                     token: tokenRecord
                 });
@@ -36,24 +35,17 @@ router.post('/login', async (req, res) => {
                 const newToken = new Token({ UserID: user._id, Token: token });
                 await newToken.save();
                 res.status(200).json({ 
-                    success: true,
                     message: 'Đăng nhập thành công',
                     token: newToken
                 });
             }
 
         } else {
-            res.status(500).json({
-                success: false,
-                message: 'Username hoặc password không chính xác'
-            });
+            res.status(401).json({ message: 'Username hoặc password không chính xác' });
         }
 
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Lỗi server'
-        });
+        res.status(500).json({ message: error.message });
     }   
 });
 
@@ -71,22 +63,15 @@ router.post('/register', async (req, res) => {
             const savedUser = await newUser.save();
            
             res.status(200).json({ 
-                success: true,
                 message: 'Đăng kí thành công',
                 data: savedUser
             });
         } else {
-            res.status(500).json({
-                success: false,
-                message: 'Username hoặc email đã tồn tại'
-            });
+            res.status(404).json({ message: 'Username hoặc email đã tồn tại' });
         }
 
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Lỗi server'
-        });
+        res.status(500).json({ message: error.message });
     }   
 });
 
@@ -95,16 +80,12 @@ router.get('/token/getAll', async (req, res) => {
     try {
         const tokens = await Token.find();
         res.status(200).json({ 
-            success: true, 
             message: 'Lấy tất cả token thành công', 
             data: tokens
         });
 
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Lỗi server'
-        });
+        res.status(500).json({ message: error.message });
     }
 });
 
@@ -114,21 +95,12 @@ router.post('/logout', async (req, res) => {
     try {
         const deletedToken = await Token.findOneAndDelete({ Token: token });
         if (deletedToken) {
-            res.status(500).json({
-                success: true,
-                message: 'Đăng xuất thành công'
-            });
+            res.status(200).json({ message: 'Đăng xuất thành công' });
         } else {
-            res.status(500).json({
-                success: true,
-                message: 'Đăng xuất không thành công'
-            });
+            res.status(404).json({ message: 'Đăng xuất không thành công' });
         }
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Lỗi server'
-        });
+        res.status(500).json({ message: error.message });
     }   
 });
 

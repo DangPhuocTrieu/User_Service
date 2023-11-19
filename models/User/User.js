@@ -18,13 +18,7 @@ const userSchema = new mongoose.Schema({
     IsAdmin: {
         type: Boolean,
         default: false
-    },
-    Cart: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Cart'
-        }
-    ]
+    }
 })
 
 const User = mongoose.model('User', userSchema); 

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import Token from '../models/Token.js';
+import Token from '../models/User/Token.js';
 
 /* 
     - Sau khi đăng nhập, server sẽ trả về 1 token
@@ -10,22 +10,15 @@ import Token from '../models/Token.js';
 export const verifyPermission = async (req, res, next) => {
     // lấy token trong phần `Headers`
     const token = req.header('Authorization');
-
     // nếu không tìm thấy token gửi lên
     if (!token) {
-        return res.status(401).json({
-            success: false,
-            message: "Không tìm thấy token"
-        });
+        return res.status(401).json({ message: "Không tìm thấy token" });
     }
 
     // tìm token trong database
     const tokenDatabase = await Token.findOne({ Token: token });
     if (!tokenDatabase) {
-        return res.status(403).json({
-            success: false,
-            message: 'Token không hợp lệ'
-        });
+        return res.status(403).json({ message: 'Token không hợp lệ' });
     }
 
     try {
@@ -36,16 +29,10 @@ export const verifyPermission = async (req, res, next) => {
         if (data.IsAdmin) {
             next();
         } else {
-            res.status(403).json({ 
-                success: false,
-                message: 'Bạn không phải phải là admin'
-            });
+            res.status(403).json({ message: 'Bạn không phải phải là admin' });
         }
 
     } catch (error) {
-        res.status(403).json({
-            success: false,
-            message: 'Lỗi server'
-        });
+        res.status(403).json({ message: error.message });
     }
 }
