@@ -5,7 +5,7 @@ import { verifyPermission } from '../middleware/verifyPermission.js';
 const router = express.Router();
 
 // Lấy tất cả sản phẩm
-router.get('/getAll', verifyPermission, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const products = await Product.find();
         res.status(200).json({ 
@@ -19,7 +19,7 @@ router.get('/getAll', verifyPermission, async (req, res) => {
 })
 
 // Lấy sản phẩm theo id
-router.get('/get/:id', verifyPermission, async (req, res) => {
+router.get('/:id', verifyPermission, async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         res.status(200).json({ 

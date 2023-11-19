@@ -18,13 +18,13 @@ mongoose.connect(process.env.MONGODB_URL, () => {
 
 
 // Services
-app.use('/api/auth-service', authService);
+app.use('/auth-service', authService);
 
-app.use('/api/user-service', userService);
+app.use('/user-service', userService);
 
-app.use('/api/product-service', productService);
+app.use('/product-service', productService);
 
-app.use('/api/sale-service', saleService);
+app.use('/sale-service', saleService);
 
 
 // Start server

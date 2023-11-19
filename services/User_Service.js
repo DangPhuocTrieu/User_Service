@@ -6,7 +6,7 @@ import { verifyPermission } from "../middleware/verifyPermission.js";
 const router = express.Router();
 
 // Lấy tất cả người dùng
-router.get('/getAll', verifyPermission, async (req, res) => {
+router.get('/', verifyPermission, async (req, res) => {
     try {
         const users = await User.find();
         res.status(200).json({ 
@@ -20,7 +20,7 @@ router.get('/getAll', verifyPermission, async (req, res) => {
 })
 
 // Lấy người dùng theo id
-router.get('/get/:id', verifyPermission, async (req, res) => {
+router.get('/:id', verifyPermission, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         res.status(200).json({ 
