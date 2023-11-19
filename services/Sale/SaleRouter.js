@@ -1,12 +1,12 @@
 import express from "express";
-import Order from "../models/Sale/Order.js";
-import OrderHistory from "../models/Sale/OrderHistory.js";
-import OrderItem from "../models/Sale/OrderItem.js";
-import Payment from "../models/Sale/Payment.js";
+import Order from "../../models/Sale/Order.js";
+import OrderHistory from "../../models/Sale/OrderHistory.js";
+import OrderItem from "../../models/Sale/OrderItem.js";
+import Payment from "../../models/Sale/Payment.js";
 import axios from "axios";
+import { getProductById } from "../Product/ProductService.js";
 
 const router = express.Router();
-const PRODUCT_SERVICE_URL = 'http://localhost:8000/product-service/';
 
 /* 
     Các chức năng của Quản Lí Bán Hàng:
@@ -115,10 +115,8 @@ router.post('/order/:userId', async (req, res) => {
         const orderItems = [];
         let totalAmount = 0;
 
-        const resData = await axios.get(PRODUCT_SERVICE_URL).then(response => response.data);
-        const productList = resData.data;
         for (const product of products) {
-            const productInfo = productList.find(item => item._id === product.productId);
+            const productInfo = await getProductById(product.productId);
             
             if (!productInfo) {
                 return res.status(404).json({ message: `Không tìm thấy sản phẩm có id = ${product.productId}` });

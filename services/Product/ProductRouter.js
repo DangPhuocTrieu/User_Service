@@ -1,6 +1,7 @@
 import express from "express";
-import Product from "../models/Product/Product.js";
-import { verifyPermission } from '../middleware/verifyPermission.js';
+import Product from "../../models/Product/Product.js";
+import { getProductById } from "./ProductService.js";
+import { verifyPermission } from '../../middleware/verifyPermission.js';
 
 const router = express.Router();
 
@@ -18,10 +19,10 @@ router.get('/', async (req, res) => {
     }
 })
 
-// Lấy sản phẩm theo id
-router.get('/:id', verifyPermission, async (req, res) => {
+// Lấy sản phẩm theo ID
+router.get('/:id', async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await getProductById(req.params.id);
         res.status(200).json({ 
             message: 'Lấy sản phẩm thành công',
             data: product 

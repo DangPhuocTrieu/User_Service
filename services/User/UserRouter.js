@@ -1,7 +1,6 @@
 import express from "express";
-import User from '../models/User/User.js';
-import Product from "../models/Product/Product.js";
-import { verifyPermission } from "../middleware/verifyPermission.js";
+import User from '../../models/User/User.js';
+import { verifyPermission } from "../../middleware/verifyPermission.js";
 
 const router = express.Router();
 

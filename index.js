@@ -1,10 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
-import userService from './services/User_Service.js';
-import authService from './services/Auth_Service.js';
-import productService from './services/Product_Service.js';
-import saleService from './services/Sale_Service.js';
+import userRouter from './services/User/UserRouter.js';
+import authRouter from './services/AuthRouter.js';
+import productRouter from './services/Product/ProductRouter.js';
+import saleRouter from './services/Sale/SaleRouter.js';
 
 dotenv.config();
 
@@ -17,14 +17,14 @@ mongoose.connect(process.env.MONGODB_URL, () => {
 });
 
 
-// Services
-app.use('/auth-service', authService);
+// Routers
+app.use('/auth-service', authRouter);
 
-app.use('/user-service', userService);
+app.use('/user-service', userRouter);
 
-app.use('/product-service', productService);
+app.use('/product-service', productRouter);
 
-app.use('/sale-service', saleService);
+app.use('/sale-service', saleRouter);
 
 
 // Start server
